@@ -1,0 +1,9 @@
+Métrique,Littéraire (fr),Structuré (CSV),Code (Python)
+Taille du fichier [octets],5092,26515,3844
+Nombre de symboles [caractères],4958,26515,3841
+Taille de l’alphabet [octets],62,55,68
+Taille de l’alphabet [caractères],60,55,67
+Entropie $H(X)$ [bits/octet],4.42,4.97,4.37
+Entropie $H(X)$ [bits/caractère],4.36,4.97,4.36
+Taille théorique minimale [octets],2814.29,16467.90,2098.62
+Ratio mots uniques / mots totaux [%],53,6,39
