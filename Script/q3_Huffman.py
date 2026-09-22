@@ -1,9 +1,8 @@
 import sys
-from common import openFileByte, FILE_PATHS
+from common import openFileByte, FILE_PATHS, PADDING_ENCODING_SIZE, packBitsToBytes
 from collections import Counter
 import heapq
 
-PADDING_ENCODING_SIZE = 3
 DICT_LEN_ENCODING_SIZE = 16
 SYMBOL_LEN_ENCODING_SIZE = 8
 SYMBOL_ENCODING_SIZE = 8
@@ -78,20 +77,7 @@ def huffmanEncoder(file: bytes) -> bytes:
 
     encodedChain = format(len(encodedDictionary), f'0{DICT_LEN_ENCODING_SIZE}b') + encodedDictionary + encodedContent
 
-    padding = (8 - (len(encodedChain)+ PADDING_ENCODING_SIZE) % 8) % 8 
-
-    encodedChain = format(padding, f'0{PADDING_ENCODING_SIZE}b') + encodedChain
-    
-    for i in range(0, padding):
-        encodedChain += "0"
-
-    encodedFile = []
-    for i in range(0, len(encodedChain), 8):
-        group = encodedChain[i:i+8]
-        byte = int(group, 2)
-        encodedFile.append(byte)
-
-    return bytes(encodedFile)
+    return packBitsToBytes(encodedChain)
 
 def decodeDictionary(encodedDictionary: str) -> dict:
 
