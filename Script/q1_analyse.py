@@ -6,12 +6,7 @@ import math
 from collections import Counter
 import re
 import csv
-
-FILE_PATHS = [
-    './Donnees/litteraire_fr.txt',
-    './Donnees/structure_meteo.csv', 
-    './Donnees/code_source_python.py'
-    ]
+from common import openFileByte, openFileChar, FILE_PATHS
 
 METRICS = [
     'Taille du fichier [octets]',
@@ -25,20 +20,6 @@ METRICS = [
 ]
 
 OUTPUT_PATH = './Resultats/q1_metriques.csv'
-
-def openFileByte(path: str) -> bytes:
-
-    with open(path, 'rb') as f:
-        return f.read()
-    
-def openFileChar(path: str) -> str:
-
-    with open(path, 'r', encoding='utf-8') as f:
-        return f.read()
-
-# # Écriture ('w' écrase, 'a' ajoute)
-# with open('fichier.txt', 'w', encoding='utf-8') as f:
-#     f.write('Bonjour le monde')
 
 def getFileData(fileByte: bytes, fileChar: str):
         
@@ -87,7 +68,6 @@ def main() -> None:
         fileByte = openFileByte(path)
         fileChar = openFileChar(path)
         fileData = getFileData(fileByte, fileChar)
-        # print(f"Résultat : {fileData}")
         data.append(fileData)
 
     transposedData = list(zip(*data))
