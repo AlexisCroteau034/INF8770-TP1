@@ -1,5 +1,5 @@
 import math
-from common import packBitsToBytes
+from common import packBitsToBytes, unpackBytesToBits
 
 SYMBOL_ENCODING_SIZE = 8
 
@@ -48,7 +48,37 @@ def lzwEncoder(file: bytes) -> bytes:
 
     return packBitsToBytes(encodedChain)
 
-# def lzwDecoder(file: bytes) -> bytes:
+def lzwDecoder(file: bytes) -> bytes:
+    encodedChain = unpackBytesToBits(file)
+
+    dictionary = [bytes([i]) for i in range(2 ** SYMBOL_ENCODING_SIZE)]
+    initialSize = len(dictionary)
+
+    decoded = bytearray()
+    previous = None
+    position = 0
+    index = 0
+
+    while position < len(encodedChain):
+        width = requiredBits(initialSize + index)
+        code = int(encodedChain[position:position + width], 2)
+        position += width
+
+        if code < len(dictionary):
+            entry = dictionary[code]
+        elif code == len(dictionary) and previous is not None:
+            entry = previous + previous[:1]
+        else:
+            raise ValueError(f"Invalid LZW code {code} at position {position - width}")
+
+        if previous is not None:
+            dictionary.append(previous + entry[:1])
+
+        decoded.extend(entry)
+        previous = entry
+        index += 1
+
+    return bytes(decoded)
 
 def main() -> None:
     
@@ -56,7 +86,7 @@ def main() -> None:
     fileByte_test = texte_test.encode('utf-8')  # convertit la chaîne en bytes
 
     encodedText = lzwEncoder(fileByte_test)
-    # decodedText = lzwDecoder(encodedText)
+    decodedText = lzwDecoder(encodedText)
 
     print(fileByte_test == decodedText)
 
