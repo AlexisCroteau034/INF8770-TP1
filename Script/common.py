@@ -31,3 +31,10 @@ def packBitsToBytes(encodedChain: str) -> bytes:
         encodedFile.append(byte)
 
     return bytes(encodedFile)
+
+def unpackBytesToBits(encodedFile: bytes) -> str:
+    bits = ''.join(format(byte, '08b') for byte in encodedFile)
+ 
+    padding = int(bits[:PADDING_ENCODING_SIZE], 2)
+ 
+    return bits[PADDING_ENCODING_SIZE:len(bits) - padding]
