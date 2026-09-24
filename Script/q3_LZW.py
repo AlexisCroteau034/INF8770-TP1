@@ -1,5 +1,5 @@
 import math
-from common import packBitsToBytes, unpackBytesToBits
+from common import packBitsToBytes, unpackBytesToBits, openFileByte,  FILE_PATHS
 
 SYMBOL_ENCODING_SIZE = 8
 
@@ -80,15 +80,33 @@ def lzwDecoder(file: bytes) -> bytes:
 
     return bytes(decoded)
 
+def processFile(path: str) -> bool:
+    original = openFileByte(path)
+ 
+    encoded = lzwEncoder(original)
+    decoded = lzwDecoder(encoded)
+ 
+    ratio = len(encoded) / len(original)
+
+    ok = False
+    if decoded == original:
+        ok = True
+ 
+    print(f"{path}")
+    print(f"  original : {len(original)} bytes")
+    print(f"  encoded  : {len(encoded)} bytes ({ratio:.1%} of original)")
+    print(f"  roundtrip: {'OK' if ok else 'MISMATCH'}")
+ 
+    return ok
+ 
 def main() -> None:
-    
-    texte_test = "ABCAABBAACAABAABA"
-    fileByte_test = texte_test.encode('utf-8')  # convertit la chaîne en bytes
-
-    encodedText = lzwEncoder(fileByte_test)
-    decodedText = lzwDecoder(encodedText)
-
-    print(fileByte_test == decodedText)
-
+    paths = FILE_PATHS
+ 
+    for path in paths:
+        try:
+            processFile(path)
+        except FileNotFoundError:
+            print(f"{path}\n  file not found")
+ 
 if __name__ == "__main__":
     main()
