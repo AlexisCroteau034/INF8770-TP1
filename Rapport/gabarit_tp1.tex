@@ -240,18 +240,26 @@ Moins définitif, le fichier littéraire présente moins de structures répété
 Par contre, le codage LZW y propose toujours l'avantage de ne pas avoir à stocker un dictionnaire en en-tête, contrairement à Huffman.
 
 % ------------------------------------------------------------------------------
-\subsection{Question 3}
+\subsection{Question 3 : Decription de la démarche expérimentale}
 \label{subsec:q3}
-Pour ce qui est de l'implémentation logicielle des algorithmes de Huffman et LZW, nous avons fait le choix d'écrire le code nous-même. Cette décision a été prise puisqu'on voulait se familiariser avec ces concepts vus en cours, plutôt que d'utiliser une librairie qui implémente ces algorithmes pour nous. Nous avons choisi de les implémenter en Python, puisque c'est un langage avec lequel nous sommes familiers.
-Notre référence pour savoir comment implémenter ces deux algorithmes correctement était les notes de cours, qui décrivent très clairement le fonctionnement des algorithmes.\\
 
-Pour valider que nos implémentations fonctionnent correctement sans pertes, nous avons comparé les textes originaux aux textes décodés. Nous avons donc constaté qu'ils étaient identiques, ce qui nous confirme que l'implémentation des deux algorithmes est bel et bien sans perte.\\
+Pour ce qui est de l'implémentation logicielle des algorithmes de Huffman et LZW, nous avons fait le choix d'écrire le code nous-même. 
+Cette décision a été prise puisqu'on voulait se familiariser avec ces concepts vus en cours, plutôt que d'utiliser une librairie qui implémente ces algorithmes pour nous. 
+Nous avons choisi de les implémenter en Python, puisque c'est un langage avec lequel nous sommes familiers.
+
+Notre référence pour savoir comment implémenter ces deux algorithmes correctement était les notes de cours, qui décrivent très clairement le fonctionnement des algorithmes.\\
+Pour valider que nos implémentations fonctionnent correctement sans pertes, nous avons comparé les textes originaux aux textes décodés. 
+Nous avons donc constaté qu'ils étaient identiques, ce qui nous confirme que l'implémentation des deux algorithmes est bel et bien sans perte.\\
 
 Pour comparer les performances des algorithmes, nous comparons simplement la taille des textes originaux avec la taille de leur version comprimée, cela nous permet de déterminer quel algorithme est le plus efficace entre Huffman et LZW.
 
 % ------------------------------------------------------------------------------
-\subsection{Question 4 : [Titre de la Question 4]}
+\subsection{Question 4 : Analyse des résultats}
 \label{subsec:q4}
+
+Le Tableau~\ref{tab:analyse_q1} et la figure 2 de cette section sont issus de métriques générées lors de l'implémentation des méthodes choisies appliquées aux fichiers à l'étude. 
+Ceux-ci confirment l'atteinte des objectifs: l'encodage par LZW a produit un meilleur taux de compression que Huffman sur les trois fichiers.
+De plus, la validité des algorithmes est également vérifiée, puisque les trois fichiers ont pu être encodés, puis décodés sans génération d'erreurs dans leur contenu.
 
 \begin{table}[htbp]
     \centering
@@ -270,12 +278,34 @@ Pour comparer les performances des algorithmes, nous comparons simplement la tai
     }
 \end{table}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{../Resultats/q4_compression.pdf}
     \caption{Débit moyen [bits/octet] obtenu par Huffman et LZW, comparé à la borne d'ordre 0 $H(X)$ et au fichier non compressé (8 bits/octet).}
     \label{fig:resultats_q4}
 \end{figure}
+
+À l'implémentation de l'algorithme d'Huffman, on constate que les résultats attendus indiqués par la borne d'entropie sont presque atteints dans les trois cas.
+La différence mineure est entre autre expliquée par la taille de l'entête, qui s'ajoute à la taille des données encodées.
+Tel que mentionné, l'effet est moindre sur les fichiers de plus grande taille, comme le CSV, et plus remarquable sur les deux autres plus petits fichiers.
+
+\subsubsection*{Conclusions par fichier}
+
+Les résultats obtenus concernant le fichier structuré de données météo confirme l'hypothèse: il présente le plus important gain entre les méthodes.
+L'encodage LZW a en effet généré un fichier 53\% plus petit que l'encodage Huffman, et présente le plus petit débit de bits par octets de tous les fichiers. 
+Ceci démontre qu'un fichier composé d'une importante répétition de séquences est bien avantagé par l'encodage LZW.
+De plus, on valide ainsi le calcul de la métrique de taux de mots unique et le choix des symboles bornants.
+
+Suivant le fichier CSV, l'encodage LZW du fichier Python propose également une économie importante face à Huffman de près de 24\%, confirmant l'hypothèse.
+Le gain lié au séquences est réel: le fichier Huffman ferait environ 2111 octets sans son entête, contre 1764 pour LZW.
+
+Finalement tel qu'anticipé, le fichier littéraire présente l'économie la plus faible, de seulement 7\% entre les méthodes. 
+Cette économie peut presque entièrement s'expliquer par le dictionnaire qui n'a pas à être transmis dans le cas de LZW.
+L'algorithme n'a donc pas su exploiter les séquences, trop peu nombreuses dans ce fichier pour offrir un réel gain.
+
+\subsubsection*{Conclusions par fichier}
+
+
 
 % ==============================================================================
 % 3. CONCLUSION
