@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  28 SEP 2026 13:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  28 SEP 2026 14:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -830,37 +830,87 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/ntxtlf/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
  [2] [3{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/newtx/ntx-ec-tlf-pc.enc}] [4]
-<figure_performances.pdf, id=84, 318.5481pt x 192.06557pt>
-File: figure_performances.pdf Graphic file (type pdf)
-<use figure_performances.pdf>
-Package pdftex.def Info: figure_performances.pdf  used on input line 256.
-(pdftex.def)             Requested size: 375.36299pt x 226.33058pt.
- [5 <./figure_performances.pdf>] [6] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
+LaTeX Font Info:    Font shape `OT1/minntx/m/n' will be
+(Font)              scaled to size 10.95pt on input line 265.
+LaTeX Font Info:    Font shape `OT1/minntx/m/n' will be
+(Font)              scaled to size 8.0pt on input line 265.
+LaTeX Font Info:    Font shape `OT1/minntx/m/n' will be
+(Font)              scaled to size 6.1pt on input line 265.
+LaTeX Font Info:    Font shape `OML/ntxmi/m/it' will be
+(Font)              scaled to size 10.95pt on input line 265.
+LaTeX Font Info:    Font shape `OML/ntxmi/m/it' will be
+(Font)              scaled to size 8.0pt on input line 265.
+LaTeX Font Info:    Font shape `OML/ntxmi/m/it' will be
+(Font)              scaled to size 6.1pt on input line 265.
+LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
+(Font)              scaled to size 10.95pt on input line 265.
+LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
+(Font)              scaled to size 8.0pt on input line 265.
+LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
+(Font)              scaled to size 6.1pt on input line 265.
+LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
+(Font)              scaled to size 10.95pt on input line 265.
+LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
+(Font)              scaled to size 8.0pt on input line 265.
+LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
+(Font)              scaled to size 6.1pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
+(Font)              scaled to size 10.95pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
+(Font)              scaled to size 8.0pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
+(Font)              scaled to size 6.1pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
+(Font)              scaled to size 10.95pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
+(Font)              scaled to size 8.0pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
+(Font)              scaled to size 6.1pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
+(Font)              scaled to size 10.95pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
+(Font)              scaled to size 8.0pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
+(Font)              scaled to size 6.1pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
+(Font)              scaled to size 10.95pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
+(Font)              scaled to size 8.0pt on input line 265.
+LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
+(Font)              scaled to size 6.1pt on input line 265.
+LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
+(Font)              scaled to size 10.95pt on input line 265.
+<../Resultats/q4_compression.pdf, id=83, 505.89pt x 289.08pt>
+File: ../Resultats/q4_compression.pdf Graphic file (type pdf)
+<use ../Resultats/q4_compression.pdf>
+Package pdftex.def Info: ../Resultats/q4_compression.pdf  used on input line 270.
+(pdftex.def)             Requested size: 375.36299pt x 214.4981pt.
+ [5 <../Resultats/q4_compression.pdf>] [6] (/usr/local/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 )
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 289.
-LaTeX Font Info:    Trying to load font information for T1+ntxtt on input line 289.
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 303.
+LaTeX Font Info:    Trying to load font information for T1+ntxtt on input line 303.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/newtx/t1ntxtt.fd
 File: t1ntxtt.fd 2012/04/20 v3.1
 )
 LaTeX Font Info:    Font shape `T1/ntxtt/m/n' will be
-(Font)              scaled to size 12.0pt on input line 289.
+(Font)              scaled to size 12.0pt on input line 303.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `ntxtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/ntxtt/m/n' will be
-(Font)              scaled to size 10.0pt on input line 289.
+(Font)              scaled to size 10.0pt on input line 303.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
-(Font)              scaled to size 10.0pt on input line 290.
+(Font)              scaled to size 10.0pt on input line 304.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
-(Font)              scaled to size 6.0pt on input line 290.
-LaTeX Font Info:    Trying to load font information for T1+txtt on input line 291.
+(Font)              scaled to size 6.0pt on input line 304.
+LaTeX Font Info:    Trying to load font information for T1+txtt on input line 305.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/txfonts/t1txtt.fd
 File: t1txtt.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `T1/ntxtt/b/n' in size <10> not available
-(Font)              Font shape `T1/txtt/bx/n' tried instead on input line 291.
+(Font)              Font shape `T1/txtt/bx/n' tried instead on input line 305.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `txtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
@@ -874,18 +924,18 @@ Package rerunfilecheck Info: File `gabarit_tp1.out' has not changed.
 (rerunfilecheck)             Checksum: F3C1622DEF6DDCD1A9EA7113DFEA5066;1941.
  ) 
 Here is how much of TeX's memory you used:
- 22569 strings out of 467525
- 365386 string characters out of 5418982
- 1035866 words of memory out of 5000000
- 51014 multiletter control sequences out of 15000+600000
- 692497 words of font info for 148 fonts, out of 8000000 for 9000
+ 22651 strings out of 467525
+ 367245 string characters out of 5418982
+ 1036106 words of memory out of 5000000
+ 51088 multiletter control sequences out of 15000+600000
+ 707247 words of font info for 175 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,10n,117p,1008b,1617s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/newtx/NewTXMI.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/txfonts/t1xbtt.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/newtx/txsys.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/newtx/ztmb.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/newtx/ztmr.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/newtx/ztmri.pfb>
-Output written on gabarit_tp1.pdf (8 pages, 198580 bytes).
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/newtx/NewTXMI.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/txfonts/t1xbtt.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/newtx/txsys.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/newtx/ztmb.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/newtx/ztmr.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/newtx/ztmri.pfb>
+Output written on gabarit_tp1.pdf (8 pages, 177203 bytes).
 PDF statistics:
- 182 PDF objects out of 1000 (max. 8388607)
- 146 compressed objects within 2 object streams
- 37 named destinations out of 1000 (max. 500000)
- 33867 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 221 PDF objects out of 1000 (max. 8388607)
+ 143 compressed objects within 2 object streams
+ 38 named destinations out of 1000 (max. 500000)
+ 37451 words of extra memory for PDF output out of 42996 (max. 10000000)
 

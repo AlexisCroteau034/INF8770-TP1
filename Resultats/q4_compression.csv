@@ -1,0 +1,9 @@
+Metrique,LittHuffman,LittLZW,MeteoHuffman,MeteoLZW,CodeHuffman,CodeLZW
+Taille originale [octets],5092,5092,26515,26515,3844,3844
+En-tête [octets],190.88,0.38,160.00,0.38,205.75,0.38
+Taille compressée [octets],3021,2810,16702,7781,2317,1764
+Taux de compression [\%],40.67,44.82,37.01,70.65,39.72,54.11
+Gain par rapport à Huffman [\%],--,6.98,--,53.41,--,23.87
+Débit [bits/octet],4.75,4.41,5.04,2.35,4.82,3.67
+Temps d’encodage [ms],0.65,1.52,2.67,5.26,0.46,1.06
+Réversible,Oui,Oui,Oui,Oui,Oui,Oui

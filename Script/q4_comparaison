@@ -1,0 +1,144 @@
+import csv
+import time
+import matplotlib.pyplot as plt
+from common import openFileByte, FILE_PATHS, PADDING_ENCODING_SIZE
+from q1_analyse import calcEntropy
+from q3_Huffman import huffmanEncoder, huffmanDecoder, buildTree, buildDictionary, encodeDictionary, DICT_LEN_ENCODING_SIZE
+from q3_LZW import lzwEncoder, lzwDecoder
+
+BITS_PER_BYTE = 8
+MS_PER_S = 1000
+PERCENT = 100
+REFERENCE_METHOD = 'Huffman'
+
+CSV_OUTPUT_PATH = './Resultats/q4_compression.csv'
+FIGURE_OUTPUT_PATH = './Resultats/q4_compression.pdf'
+
+FILE_LABELS = ['Littéraire (fr)', 'Structuré (CSV)', 'Code (Python)']
+FILE_KEYS = ['Litt', 'Meteo', 'Code']
+
+METRICS = [
+    'Taille originale [octets]',
+    'En-tête [octets]',
+    'Taille compressée [octets]',
+    r'Taux de compression [\%]',
+    r'Gain par rapport à Huffman [\%]',
+    'Débit [bits/octet]',
+    'Temps d’encodage [ms]',
+    'Réversible'
+]
+
+UNCOMPRESSED_LABEL = 'Sans compression'
+ENTROPY_LABEL = 'Borne d’ordre 0 $H(X)$'
+SERIES_COLORS = {
+    UNCOMPRESSED_LABEL: '#c3c2b7',
+    'Huffman': '#2a78d6',
+    'LZW': '#eb6834',
+    ENTROPY_LABEL: '#1baf7a',
+}
+TEXT_COLOR = '#52514e'
+GRID_COLOR = '#e1e0d9'
+AXIS_COLOR = '#c3c2b7'
+SURFACE_COLOR = '#ffffff'
+
+def huffmanHeaderSize(data: bytes) -> float:
+    dictionary = buildDictionary(buildTree(data))
+    headerBits = PADDING_ENCODING_SIZE + DICT_LEN_ENCODING_SIZE + len(encodeDictionary(dictionary))
+    return headerBits / BITS_PER_BYTE
+
+def lzwHeaderSize(data: bytes) -> float:
+    return PADDING_ENCODING_SIZE / BITS_PER_BYTE
+
+METHODS = {
+    'Huffman': (huffmanEncoder, huffmanDecoder, huffmanHeaderSize),
+    'LZW': (lzwEncoder, lzwDecoder, lzwHeaderSize),
+}
+
+CSV_HEADER = ['Metrique'] + [key + method for key in FILE_KEYS for method in METHODS]
+
+def evaluate(data: bytes, encoder, decoder) -> tuple:
+    start = time.perf_counter()
+    encoded = encoder(data)
+    encodeTime = (time.perf_counter() - start) * MS_PER_S
+
+    reversible = decoder(encoded) == data
+    return encoded, encodeTime, reversible
+
+def saveFigure(bitsPerByte: dict, entropies: list) -> None:
+    series = {UNCOMPRESSED_LABEL: [BITS_PER_BYTE] * len(FILE_LABELS)}
+    series.update(bitsPerByte)
+    series[ENTROPY_LABEL] = entropies
+
+    barWidth = 0.2
+    positions = range(len(FILE_LABELS))
+
+    fig, ax = plt.subplots(figsize=(7, 4))
+    for offset, (label, values) in enumerate(series.items()):
+        bars = ax.bar(
+            [p + offset * barWidth for p in positions], values, barWidth,
+            label=label, color=SERIES_COLORS[label],
+            edgecolor=SURFACE_COLOR, linewidth=1.5
+        )
+        if label != UNCOMPRESSED_LABEL:
+            ax.bar_label(bars, fmt='%.2f', fontsize=7, color=TEXT_COLOR, padding=2)
+
+    groupCenter = barWidth * (len(series) - 1) / 2
+    ax.set_xticks([p + groupCenter for p in positions])
+    ax.set_xticklabels(FILE_LABELS, color=TEXT_COLOR)
+    ax.set_ylabel('Débit moyen [bits/octet]', color=TEXT_COLOR)
+    ax.set_ylim(0, BITS_PER_BYTE + 1)
+
+    ax.set_axisbelow(True)
+    ax.yaxis.grid(True, color=GRID_COLOR, linewidth=0.8)
+    for side in ('top', 'right', 'left'):
+        ax.spines[side].set_visible(False)
+    ax.spines['bottom'].set_color(AXIS_COLOR)
+    ax.tick_params(colors=TEXT_COLOR, length=0)
+
+    ax.legend(
+        loc='upper center', bbox_to_anchor=(0.5, 1.12), ncol=len(series),
+        frameon=False, fontsize=8, labelcolor=TEXT_COLOR
+    )
+
+    fig.tight_layout()
+    fig.savefig(FIGURE_OUTPUT_PATH)
+
+def main() -> None:
+    columns = []
+    bitsPerByte = {method: [] for method in METHODS}
+    entropies = []
+
+    for path in FILE_PATHS:
+        data = openFileByte(path)
+        originalSize = len(data)
+        entropies.append(calcEntropy(data))
+
+        for method, (encoder, decoder, headerSize) in METHODS.items():
+            encoded, encodeTime, reversible = evaluate(data, encoder, decoder)
+            compressedSize = len(encoded)
+            rate = (1 - compressedSize / originalSize) * PERCENT
+            bitRate = compressedSize * BITS_PER_BYTE / originalSize
+            bitsPerByte[method].append(bitRate)
+
+            if method == REFERENCE_METHOD:
+                referenceSize = compressedSize
+                gain = '--'
+            else:
+                gain = f"{(1 - compressedSize / referenceSize) * PERCENT:.2f}"
+
+            columns.append([
+                originalSize, f"{headerSize(data):.2f}", compressedSize,
+                f"{rate:.2f}", gain, f"{bitRate:.2f}", f"{encodeTime:.2f}",
+                'Oui' if reversible else 'Non'
+            ])
+
+    with open(CSV_OUTPUT_PATH, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow(CSV_HEADER)
+        for index, metric in enumerate(METRICS):
+            writer.writerow([metric] + [column[index] for column in columns])
+
+    saveFigure(bitsPerByte, entropies)
+
+if __name__ == "__main__":
+    main()

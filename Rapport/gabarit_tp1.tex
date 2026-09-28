@@ -247,15 +247,29 @@ Décrivez votre implémentation logicielle, les algorithmes créés ou adaptés,
 % ------------------------------------------------------------------------------
 \subsection{Question 4 : [Titre de la Question 4]}
 \label{subsec:q4}
-Présentez vos résultats expérimentaux, en intégrant des tableaux ou des graphiques pour illustrer vos observations et valider vos hypothèses initiales. Discutez des performances obtenues et analysez les limites de votre approche.
 
-La Figure~\ref{fig:exemple_figure} donne un exemple de graphique comparatif. N'oubliez pas d'inclure une légende descriptive et les unités sur les axes.
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Résultats de compression de Huffman et LZW sur les trois fichiers.}
+    \label{tab:resultats_q4}
+    \csvreader[
+        tabular=lrrrrrr,
+        table head={\toprule
+            & \multicolumn{2}{c}{\textbf{Littéraire (fr)}} & \multicolumn{2}{c}{\textbf{Structuré (CSV)}} & \multicolumn{2}{c}{\textbf{Code (Python)}} \\
+            \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+            \textbf{Métrique} & Huffman & LZW & Huffman & LZW & Huffman & LZW \\\midrule},
+        table foot=\bottomrule
+    ]{../Resultats/q4_compression.csv}{}{%
+        \csvcoli & \csvcolii & \csvcoliii & \csvcoliv & \csvcolv & \csvcolvi & \csvcolvii
+    }
+\end{table}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.75\textwidth]{figure_performances.pdf}
-    \caption{Courbe ou histogramme comparatif des performances obtenues selon la méthode testée. Veillez à expliciter la légende et les unités employées.}
-    \label{fig:exemple_figure}
+    \includegraphics[width=0.75\textwidth]{../Resultats/q4_compression.pdf}
+    \caption{Débit moyen [bits/octet] obtenu par Huffman et LZW, comparé à la borne d'ordre 0 $H(X)$ et au fichier non compressé (8 bits/octet).}
+    \label{fig:resultats_q4}
 \end{figure}
 
 % ==============================================================================
