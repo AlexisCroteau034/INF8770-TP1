@@ -86,7 +86,7 @@
     {\normalsize Croteau, Alexis \quad (Matricule : 2205235)}\\[1.5cm]
     
     {\large \textbf{Chargé de laboratoire :}}\\[0.3cm]
-    {\normalsize Nom du Chargé de Laboratoire}\\[2cm]
+    {\normalsize Yassine Achour}\\[2cm]
     
     \vfill
     
@@ -111,17 +111,12 @@
 % ==============================================================================
 \section{Introduction}
 \label{sec:introduction}
-%Cette section présente l'objectif du travail pratique et le contexte des travaux réalisés. Expliquez brièvement la problématique traitée, les concepts théoriques abordés ainsi que les technologies ou données utilisées dans le cadre de vos expérimentations.
 
-%\textit{Rappel : Ce gabarit est limité à un maximum strict de 10 pages, annexes comprises. Veillez à rester synthétique, rigoureux et précis dans vos explications.}
+Ce travail pratique, dans le cadre du cours INF8770: Technologies Multimédias, a pour but d'explorer différentes méthodes de compression de données textuelles sans perte.
 
-%Ce travail a pour objectif l'expérimentation avec les méthodes de compression sans perte vues en classe, dans le but d'en obtenir une compréhension plus pratique.\\
-
-Ce travail pratique, dans le cadre du cours INF8770: Technologies Multimédias, a pour but d'explorer différentes méthodes de compressions de données textuelles sans pertes.\\
-
-L'objectif principal de ce travail est d'identifer et d'implémenter une méthode de compression sans perte qui sera plus efficace que la méthode d'Huffman.
-Pour ce faire, nous allons nous concentrer sur trois textes de natures différentes: un texte littéraire, un document structuré CSV ainsi que du code source.
-Ce travail présente une analyse détaillée des difficultées liés à la compression sans perte de ces trois textes, ainsi qu'une justification de la méthode de compression choisie.\\
+L'objectif principal de ce travail est d'identifer et d'implémenter une méthode de compression sans perte qui sera plus efficace que la méthode de Huffman.
+Pour ce faire, il est demandé de se concentrer sur trois textes de natures différentes: un texte littéraire, un document structuré CSV ainsi que du code source.
+Ce travail présente une analyse détaillée des difficultées liées à la compression sans perte de ces trois textes, ainsi qu'une justification de la méthode de compression choisie.
 
 En plus de l'algorithme choisi, la méthode d'Huffman sera implémentée pour servir de référence et pour démontrer l'efficacité de l'algorithme.
 
@@ -146,17 +141,16 @@ Puisque très souvent, un caractère est codé par un seul octet, ces deux valeu
 Ensuite, le tableau expose la taille de l'alphabet, soit la longueur de la liste de tous les symboles différents que contient le fichier, encore une fois exprimée en octets, et en nombre de symboles.
 Ces deux valeurs seront à nouveau à peu près équivalentes, pour la même raison exprimée plus tôt.
 
-La métrique suivante présente l'entropie, soit le nombre minimal de bits nécessaires, en moyenne, pour exprimer un symbole du fichier à l'étude, en employant une méthode traitant chaque symbole individuellement.
+La métrique suivante présente l'entropie, soit le nombre minimal de bits nécessaires, en moyenne, pour exprimer un symbole du fichier à l'étude, en employant une méthode traitant chaque symbole individuellement~\cite{shannon1948}.
 Elle est calculée en prenant en compte la probabilité d'occurrence de chaque symbole dans le texte, et est un indicateur de l'équilibre d'apparition entre ceux-ci.
 Un fichier présentant une forte entropie aura donc une occurrence assez équivalente d'apparition de chacun des symboles de son alphabet, alors qu'un fichier plus déséquilibré aura une entropie plus faible.
-Cette valeur minimale ne borne par contre que les modèles d'ordre 0, tel le modèle de Huffman, et un code qui prend en compte les séquences de symboles pourrait la surpasser.
+Cette valeur minimale ne borne par contre que les modèles d'ordre 0, tel le modèle de Huffman~\cite{huffman1952}, et un code qui prend en compte les séquences de symboles pourrait la surpasser.
 Le ratio entropie sur entropie maximale représente simplement l'économie que génère un modèle d'ordre 0 optimal par rapport à un fichier encodé sans compression.
 Découlant directement de l'entropie, la taille théorique minimale multiplie cette valeur de bits par la taille du fichier, nous proposant le meilleur scénario de taille que pourrait produire une compression avec un modèle traitant les symboles individuellement.
 
 Finalement, le ratio de mots uniques découle d'une manipulation un peu plus complexe, et est un indicateur approximatif de la performance attendue d'un algorithme exploitant les séquences.
 Cette valeur implique d'abord la séparation du fichier en mots, soit des séries de caractères séparées par des délimiteurs. 
 Dans le but de produire un résultat optimal tout en gardant une règle uniforme pour les trois fichiers, le choix des caractères a été réalisé suite à une analyse des fichiers et de leurs structures répétitives. 
-% Les caractères espace, saut de ligne (\verb|\n|), point-virgule (\texttt{;}), virgule (\texttt{,}), point (\texttt{.}) et apostrophe (\texttt{'}) ont été retenus comme bornes, et le détail de ces choix sera présenté dans les analyses des caractéristiques spécifiques de chaque texte. 
 Le ratio de mots uniques nous indique ainsi la propension de répétition des mêmes mots dans le texte.
 Un ratio élevé suppose un texte composé de peu de répétitions, alors qu'un ratio faible signifie qu'un petit nombre de mots différents se répèteront souvent.
 
@@ -173,11 +167,11 @@ Un ratio élevé suppose un texte composé de peu de répétitions, alors qu'un 
     }
 \end{table}
 
-\subsubsection*{Analyse du texte littéraire en Français.}
+\subsubsection*{Analyse du texte littéraire en français}
 
-Dabord, le texte littéraire en français présente une métrique se distinguant, soit la différence assez marquée entre la taille du fichier et en octets et en nombre de caractères.
-Celle-ci s'explique par la méthode d'encodage UTF-8, qui emploie deux octets pour exprimer les caractères accentués: un premier symbole est universel à tous les caractères accentués, alors que le second distingue parmi ceux-ci.
-Ainsi, la différence nous indique que ce texte sera composée d'une quantité importante de caractères accentués. 
+D'abord, le texte littéraire en français présente une métrique se distinguant, soit la différence assez marquée entre la taille du fichier en octets et en nombre de caractères.
+Celle-ci s'explique par la méthode d'encodage UTF-8 ~\cite{rfc3629}, qui emploie deux octets pour exprimer les caractères accentués: un premier symbole est universel à tous les caractères accentués, alors que le second distingue parmi ceux-ci.
+Ainsi, la différence nous indique que ce texte sera composé d'une quantité importante de caractères accentués. 
 
 De par sa nature littéraire, le fichier sera certainement composé de certains symboles se répétant très souvent, par exemple l'espace.
 L'entropie relative d'environ 74\% renforce cette intuition de relatif déséquilibre dans la répartition des caractères, ce qui favorisera l'encodage Huffman.
@@ -187,16 +181,16 @@ Ainsi, un algorithme basé sur les structures répétitives pourrait générer u
 \subsubsection*{Analyse des données structurées météo}
 
 D'autre part, les données structurées météo présentent une entropie relative élevée. 
-Cette métriques nous indique que ce texte n'est probablement pas très adapté à un encodage par Huffman.
+Cette métrique nous indique que ce texte n'est probablement pas très adapté à un encodage par Huffman.
 En effet, la répartition assez régulière de caractères diversifiés ne permettra pas d'exploiter l'avantage principal de Huffman, soit l'encodage de caractères fréquents avec très peu de bits. 
 
-De plus, on constate que ce texte présente une très importantes répétition des mêmes structures, indiquée par le ratio de mots uniques très faible.
+De plus, on constate que ce texte présente une très importante répétition des mêmes structures, indiquée par le ratio de mots uniques très faible.
 Il est donc un candidat idéal pour une méthode d'encodage considérant les séquences répétitives, qui produira un résultat nettement plus satisfaisant que Huffman.
 
 \subsubsection*{Analyse du code source en Python}
 
 Finalement, le code source en Python relève l'entropie relative la plus faible, nous indiquant un fort déséquilibre de répartition entre les différents symboles de son alphabet.
-Ceci est attendu, puisqu'un fichier de code est composé de caractères à forte répartition de par leur emploi dans le contexte, par exemple les parenthèses, espaces de l'indentation ou autre marqueurs de structure.
+Ceci est attendu, puisqu'un fichier de code est composé de caractères à forte répartition de par leur emploi dans le contexte, par exemple les parenthèses, espaces de l'indentation ou autres marqueurs de structure.
 Ainsi, on pourra s'attendre à un résultat satisfaisant par l'algorithme de Huffman, qui saura exploiter ce déséquilibre.
 
 Par contre avec un ratio de mots uniques relativement faible, il est probable qu'un algorithme employant une méthode prenant en compte les structures répétitives sera également efficace.
@@ -219,26 +213,26 @@ Elle doit aussi bien entendu exploiter les séquences, et rester raisonnable à 
 
 \subsubsection*{Exploration des méthodes vues en classe}
 
-Parmi les méthodes vues en classe qui s'appliquent aux documents textuels, on compte l'encodage arithmétique.
+Parmi les méthodes vues en classe~\cite{notesCours} qui s'appliquent aux documents textuels, on compte l'encodage arithmétique.
 Celui-ci est encore un modèle d'ordre 0, et n'élimine que les arrondis de Huffman à des bits entiers. Son gain serait donc marginal. 
 
 Le codage prédictif ou de Golomb-Rice est plutôt conçu pour des signaux numériques où les valeurs voisines sont corrélées, et peu pour du texte.
 En effet, la valeur numérique d'un octet de texte n'a pas de lien avec celle de son voisin, et encoder un lien entre elles serait peu pertinent.
 
-Parmi les méthodes plus prometteuses, on compte l'encodage par paires (BPE).
+Parmi les méthodes plus prometteuses, on compte l'encodage par paires (BPE)~\cite{gage1994}.
 Cet algorithme prend bien en compte les séquences répétées, en remplaçant itérativement les paires fréquentes par un octet libre.
 Puisque les alphabets à l'étude ne comptent qu'entre 55 et 68 caractères parmi les 256 valeurs possibles, il resterait amplement de valeurs libres que cet algorithme pourrait exploiter.
 Par contre, l'encodage par paires nécessite un dictionnaire imposant, qu'il faut encoder à même l'en-tête du fichier.
 Il devient donc pertinent dans le cas de fichiers de grande taille et peu pour des fichiers plus réduits comme ceux étudiés ici.
 
-L'encodage LZ77 est également un candidat à évaluer. 
+L'encodage LZ77 est également un candidat à évaluer~\cite{ziv1977}. 
 Son utilisation d'une fenêtre glissante capturerait bien les répétitions de séquences dans le fichier CSV ou de code.
 Par contre, l'emploi de triplets a un coût fixe de bits, même si la correspondance est très courte ou absente.
 De plus, il est assez complexe à implémenter, pour un avantage assez incertain sur les fichiers à l'étude, surtout le fichier littéraire composé de moins de répétitions.
 
 \subsubsection*{Choix de la méthode et argumentation}
 
-La méthode retenue pour l'analyse des fichiers dans le cadre de ce travail pratique est l'encodage LZW.
+La méthode retenue pour l'analyse des fichiers dans le cadre de ce travail pratique est l'encodage LZW~\cite{welch1984}.
 Cet algorithme conserve l'avantage des méthodes par dictionnaire, puisqu'il exploite bien les séquences.
 Il n'émet qu'un seul code par séquence, mais surtout, son dictionnaire n'est pas transmis en en-tête du fichier.
 Ainsi, il ne présente pas ce coût fixe imposé par d'autres méthodes et non négligeable sur de petits fichiers, puisque son dictionnaire peut être reconstruit directement par l'algorithme de décodage.
@@ -249,24 +243,38 @@ Moins définitif, le fichier littéraire présente moins de structures répété
 Par contre, le codage LZW y propose toujours l'avantage de ne pas avoir à stocker un dictionnaire en en-tête, contrairement à Huffman.
 
 % ------------------------------------------------------------------------------
-\subsection{Question 3 : Decription de la démarche expérimentale}
+\subsection{Question 3 : Description de la démarche expérimentale}
 \label{subsec:q3}
 
-Pour ce qui est de l'implémentation logicielle des algorithmes de Huffman et LZW, nous avons fait le choix d'écrire le code nous-même. 
-Cette décision a été prise puisqu'on voulait se familiariser avec ces concepts vus en cours, plutôt que d'utiliser une librairie qui implémente ces algorithmes pour nous. 
-Nous avons choisi de les implémenter en Python, puisque c'est un langage avec lequel nous sommes familiers.
+Pour ce qui est de l'implémentation logicielle des algorithmes de Huffman et LZW, le code a été rédigé en entier. 
+Ce choix a été fait dans le but de se familiariser avec les concepts vus en cours, plutôt que d'utiliser une librairie qui implémente ces algorithmes. 
+Le langage Python a été retenu étant donné sa familiarité et sa facilité d'écriture.
 
-Notre référence pour savoir comment implémenter ces deux algorithmes correctement était les notes de cours, qui décrivent très clairement le fonctionnement des algorithmes.\\
-Pour valider que nos implémentations fonctionnent correctement sans pertes, nous avons comparé les textes originaux aux textes décodés. 
-Nous avons donc constaté qu'ils étaient identiques, ce qui nous confirme que l'implémentation des deux algorithmes est bel et bien sans perte.\\
+La référence pour savoir comment implémenter ces deux algorithmes correctement était les notes de cours~\cite{notesCours}, qui décrivent très clairement le fonctionnement de ceux-ci.
+Pour valider que les implémentations fonctionnent correctement sans perte, on a comparé les textes originaux aux textes décodés. 
+Il a ainsi été possible de constater qu'ils étaient identiques, ce qui confirme que l'implémentation des deux algorithmes est sans perte.
 
-Pour comparer les performances des algorithmes, nous comparons simplement la taille des textes originaux avec la taille de leur version comprimée, cela nous permet de déterminer quel algorithme est le plus efficace entre Huffman et LZW.
+\subsubsection*{Implémentation de Huffman}
+
+L'encodeur calcule d'abord la fréquence de chaque octet à l'aide de \texttt{collections.Counter}~\cite{python313}, puis construit l'arbre de Huffman avec une file de priorité (\texttt{heapq}) qui fusionne à chaque étape les deux nœuds les moins fréquents~\cite{huffman1952}.
+Les codes sont obtenus par un parcours de l'arbre.
+Le fichier compressé contient un en-tête formé de 3 bits de remplissage, de la longueur du dictionnaire sur 16 bits et, pour chaque symbole, la longueur de son code de 8 bits, le code lui-même et le symbole de 8 bits, suivi du contenu encodé.
+Le décodeur reconstruit le dictionnaire à partir de cet en-tête.
+
+\subsubsection*{Implémentation de LZW}
+
+Le dictionnaire est initialisé avec les 256 valeurs d'octet possibles~\cite{welch1984}.
+L'encodeur prolonge la séquence courante tant qu'elle existe dans le dictionnaire. 
+Sinon, il émet le code de cette séquence et ajoute la séquence prolongée au dictionnaire.
+Les codes sont écrits avec une largeur variable, partant de 8 bits et ajustée à la taille du dictionnaire, afin de ne pas gaspiller de bits sur de petits fichiers.
+Aucun dictionnaire n'est transmis puisque le décodeur le reconstruit au fil de la lecture, en synchronisant la largeur des codes avec l'encodeur et en traitant le cas où un code désigne une entrée qu'il n'a pas encore créée.
+
 
 % ------------------------------------------------------------------------------
 \subsection{Question 4 : Analyse des résultats}
 \label{subsec:q4}
 
-Le Tableau\ref{tab:resultats_q4} et la Figure~\ref{fig:resultats_q4} de cette section sont issus de métriques générées lors de l'implémentation des méthodes choisies appliquées aux fichiers à l'étude. 
+Le Tableau~\ref{tab:resultats_q4} et la Figure~\ref{fig:resultats_q4} de cette section sont issus de métriques générées lors de l'implémentation des méthodes choisies appliquées aux fichiers à l'étude. 
 Ceux-ci confirment l'atteinte des objectifs: l'encodage par LZW a produit un meilleur taux de compression que Huffman sur les trois fichiers.
 Le débit de chacun des fichiers passe sous la borne de l'entropie, ce qui est impossible pour un encodage évaluant chaque symbole individuellement.
 De plus, la validité des algorithmes est également vérifiée, puisque les trois fichiers ont pu être encodés, puis décodés sans génération d'erreurs dans leur contenu.
@@ -291,7 +299,7 @@ De plus, la validité des algorithmes est également vérifiée, puisque les tro
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{../Resultats/q4_compression.pdf}
-    \caption{Débit moyen [bits/octet] obtenu par Huffman et LZW, comparé à la borne d'ordre 0 $H(X)$ et au fichier non compressé (8 bits/octet).}
+    \caption{Débit moyen [bits/octet] obtenu par Huffman et LZW, comparé à la borne d'ordre 0 $H(X)$ et au fichier non compressé (8 bits/octet). Figure générée avec Matplotlib.~\cite{hunter2007}}
     \label{fig:resultats_q4}
 \end{figure}
 
@@ -304,7 +312,7 @@ Tel que mentionné, l'effet est moindre sur les fichiers de plus grande taille, 
 Les résultats obtenus concernant le fichier structuré de données météo confirment l'hypothèse: il présente le plus important gain entre les méthodes.
 L'encodage LZW a en effet généré un fichier 53\% plus petit que l'encodage Huffman, et présente le plus petit débit de bits par octet de tous les fichiers. 
 Ceci démontre qu'un fichier composé d'une importante répétition de séquences est bien avantagé par l'encodage LZW.
-De plus, on valide ainsi le calcul de la métrique de taux de mots unique et le choix des symboles bornants.
+De plus, on valide ainsi le calcul de la métrique de taux de mots uniques et le choix des symboles bornants.
 
 Suivant le fichier CSV, l'encodage LZW du fichier Python propose également une économie importante face à Huffman de près de 24\%, confirmant l'hypothèse.
 Le gain lié aux séquences est réel: le fichier Huffman ferait environ 2111 octets sans son en-tête, contre 1764 pour LZW.
@@ -323,7 +331,7 @@ Par contre, malgré le gain d'espace qu'offre LZW, d'autres métriques retenues 
 En effet, LZW a pris environ deux fois plus de temps que Huffman pour s'exécuter.
 Ceci est certainement dû à l'écriture du dictionnaire, qui est nettement plus complexe que celle de Huffman, et la recherche dans celui-ci alors qu'il grossit à chaque octet.
 Dans le cadre de cette expérimentation, l'impact d'un temps d'exécution plus important est négligeable, mais une mise à l'échelle du processus effectué pourrait avoir d'autres résultats.
-En effet, un temps d'exécution plus élevé impose certainement plus de ressources de calculs.
+En effet, un temps d'exécution plus élevé impose certainement plus de ressources de calcul.
 Le choix réel d'une méthode à retenir dépendra donc à la fois des ressources mémoire disponibles, mais aussi des ressources de calcul.
 
 % ==============================================================================
@@ -342,31 +350,52 @@ Aussi, avant d'affirmer que LZW pourrait remplacer Huffman dans de nombreux cas 
 % RÉFÉRENCES
 % ==============================================================================
 \begin{thebibliography}{99}
-    \bibitem{ref1}
-    A.~Auteur, « Titre de l'article ou de la publication », \textit{Nom de la Revue ou Conférence}, vol.~10, no.~3, pp.~120--130, 2023.
-    
-    \bibitem{ref2}
-    B.~Smith et C.~Jones, \textit{Titre du manuel de référence ou de la documentation}, 3e éd., Éditeur, 2024.
+    \bibitem{notesCours}
+    Bilodeau, Guillaume-Alexandre, Polytechnique Montréal, \textit{INF8770 -- Technologies multimédias : notes de cours}, Département de génie informatique et génie logiciel, automne 2026.
+
+    \bibitem{shannon1948}
+    C.~E.~Shannon, « A Mathematical Theory of Communication », \textit{Bell System Technical Journal}, vol.~27, no.~3, pp.~379--423, 1948.
+
+    \bibitem{huffman1952}
+    D.~A.~Huffman, « A Method for the Construction of Minimum-Redundancy Codes », \textit{Proceedings of the IRE}, vol.~40, no.~9, pp.~1098--1101, 1952.
+
+    \bibitem{ziv1977}
+    J.~Ziv et A.~Lempel, « A Universal Algorithm for Sequential Data Compression », \textit{IEEE Transactions on Information Theory}, vol.~23, no.~3, pp.~337--343, 1977.
+
+    \bibitem{welch1984}
+    T.~A.~Welch, « A Technique for High-Performance Data Compression », \textit{Computer}, vol.~17, no.~6, pp.~8--19, 1984.
+
+    \bibitem{gage1994}
+    P.~Gage, « A New Algorithm for Data Compression », \textit{The C Users Journal}, vol.~12, no.~2, pp.~23--38, 1994.
+
+    \bibitem{rfc3629}
+    F.~Yergeau, « UTF-8, a transformation format of ISO 10646 », RFC~3629, Internet Engineering Task Force, 2003.
+
+    \bibitem{hunter2007}
+    J.~D.~Hunter, « Matplotlib: A 2D Graphics Environment », \textit{Computing in Science \& Engineering}, vol.~9, no.~3, pp.~90--95, 2007.
+
+    \bibitem{python313}
+    Python Software Foundation, \textit{Python 3.13 Documentation} (modules \texttt{collections}, \texttt{heapq}, \texttt{re}, \texttt{csv}, \texttt{math}, \texttt{time}). [En ligne]. Disponible : \url{https://docs.python.org/3.13/}
 \end{thebibliography}
 
 % ==============================================================================
 % ANNEXES
 % ==============================================================================
-\newpage
-\appendix
-\section{Annexe : Données complémentaires et extraits de code}
-\label{sec:annexe}
+% \newpage
+% \appendix
+% \section{Annexe : Données complémentaires et extraits de code}
+% \label{sec:annexe}
 
-Cette annexe contient les données supplémentaires (calculs détaillés, tableaux de distribution étendus) ainsi que les extraits de code source clés développés pour le travail pratique.
+% Cette annexe contient les données supplémentaires (calculs détaillés, tableaux de distribution étendus) ainsi que les extraits de code source clés développés pour le travail pratique.
 
-\begin{lstlisting}[language=Python, caption={Exemple d'extrait de code source pour le traitement multimédia.}]
-# Exemple d'extrait de code developpe par les etudiants
-def traitement_multimedia(fichier_entree: str, fichier_sortie: str):
-    """
-    Fonction principale de traitement ou de compression des donnees.
-    """
-    # Inserer ici les instructions cles de votre algorithme
-    print(f"Traitement de {fichier_entree} vers {fichier_sortie}")
-\end{lstlisting}
+% \begin{lstlisting}[language=Python, caption={Exemple d'extrait de code source pour le traitement multimédia.}]
+% # Exemple d'extrait de code developpe par les etudiants
+% def traitement_multimedia(fichier_entree: str, fichier_sortie: str):
+%     """
+%     Fonction principale de traitement ou de compression des donnees.
+%     """
+%     # Inserer ici les instructions cles de votre algorithme
+%     print(f"Traitement de {fichier_entree} vers {fichier_sortie}")
+% \end{lstlisting}
 
 \end{document}
