@@ -1,1 +1,9 @@
 __pycache__/
+Rapport/*.pdf
+Rapport/*.aux
+Rapport/*.log
+Rapport/*.toc
+Rapport/*.out
+Rapport/*.fls
+Rapport/*.fdb_latexmk
+Rapport/*.synctex.gz

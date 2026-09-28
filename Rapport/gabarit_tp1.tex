@@ -83,7 +83,7 @@
     
     {\large \textbf{Étudiants :}}\\[0.3cm]
     {\normalsize Capistran-Champoux, Charlotte \quad (Matricule : 2353263)}\\[0.15cm]
-    {\normalsize Nom Prénom Étudiant 2 \quad (Matricule : XXXXXXX)}\\[1.5cm]
+    {\normalsize Croteau, Alexis \quad (Matricule : 2205235)}\\[1.5cm]
     
     {\large \textbf{Chargé de laboratoire :}}\\[0.3cm]
     {\normalsize Nom du Chargé de Laboratoire}\\[2cm]
@@ -240,9 +240,14 @@ Moins définitif, le fichier littéraire présente moins de structures répété
 Par contre, le codage LZW y propose toujours l'avantage de ne pas avoir à stocker un dictionnaire en en-tête, contrairement à Huffman.
 
 % ------------------------------------------------------------------------------
-\subsection{Question 3 : [Titre de la Question 3]}
+\subsection{Question 3}
 \label{subsec:q3}
-Décrivez votre implémentation logicielle, les algorithmes créés ou adaptés, ainsi que les librairies et outils intégrés à votre solution. Présentez la démarche expérimentale mise en place pour valider votre code.
+Pour ce qui est de l'implémentation logicielle des algorithmes de Huffman et LZW, nous avons fait le choix d'écrire le code nous-même. Cette décision a été prise puisqu'on voulait se familiariser avec ces concepts vus en cours, plutôt que d'utiliser une librairie qui implémente ces algorithmes pour nous. Nous avons choisi de les implémenter en Python, puisque c'est un langage avec lequel nous sommes familiers.
+Notre référence pour savoir comment implémenter ces deux algorithmes correctement était les notes de cours, qui décrivent très clairement le fonctionnement des algorithmes.\\
+
+Pour valider que nos implémentations fonctionnent correctement sans pertes, nous avons comparé les textes originaux aux textes décodés. Nous avons donc constaté qu'ils étaient identiques, ce qui nous confirme que l'implémentation des deux algorithmes est bel et bien sans perte.\\
+
+Pour comparer les performances des algorithmes, nous comparons simplement la taille des textes originaux avec la taille de leur version comprimée, cela nous permet de déterminer quel algorithme est le plus efficace entre Huffman et LZW.
 
 % ------------------------------------------------------------------------------
 \subsection{Question 4 : [Titre de la Question 4]}
