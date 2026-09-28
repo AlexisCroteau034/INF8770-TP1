@@ -299,7 +299,7 @@ INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/newtx/ntxexa.tfm
 OUTPUT gabarit_tp1.toc
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/newtx/ntx-Italic-tlf-t1.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/newtx/ntx-Regular-tlf-sc-t1.tfm
-INPUT ../resultats/q1_metriques.csv
+INPUT ../Resultats/q1_metriques.csv
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/newtx/ntx-ec-tlf-pc.enc
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/public/newtx/ntxmi.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/newtx/NewTXMI.tfm
@@ -307,6 +307,9 @@ INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/newtx/stxscr.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/public/newtx/ntxsy.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/newtx/txsys.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/newtx/txex-bar.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/public/newtx/ntxmi.vf
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/newtx/NewTXMI.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/newtx/stxscr.tfm
 INPUT ./figure_performances.pdf
 INPUT ./figure_performances.pdf
 INPUT ./figure_performances.pdf

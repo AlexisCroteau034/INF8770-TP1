@@ -15,8 +15,9 @@ METRICS = [
     'Taille de l’alphabet [caractères]',
     'Entropie $H(X)$ [bits/octet]',
     'Entropie $H(X)$ [bits/caractère]',
+    r'Entropie relative $H(X)/H_{max}$ [\%]',
     'Taille théorique minimale [octets]',
-    'Ratio mots uniques / mots totaux [%]'
+    r'Ratio mots uniques / mots totaux [\%]'
 ]
 
 OUTPUT_PATH = './Resultats/q1_metriques.csv'
@@ -35,12 +36,16 @@ def getFileData(fileByte: bytes, fileChar: str):
     entropyByte = calcEntropy(fileByte)
     entropyChar = calcEntropy(fileChar)
 
+    # H_max = log2(|A|) : entropie d'une distribution parfaitement uniforme sur l'alphabet
+    maxEntropyByte = math.log2(alphByteLength)
+    relativeEntropy = entropyByte / maxEntropyByte * 100
+
     minSize = (entropyByte * fileSizeByte) / 8
 
     tokens = tokenize(fileChar)
-    uniqueWordsRatio = int(len(set(tokens)) / len(tokens) *100)
+    uniqueWordsRatio = len(set(tokens)) / len(tokens) *100
 
-    return fileSizeByte, fileLength, alphByteLength, alphCharLength, entropyByte, entropyChar, minSize, uniqueWordsRatio
+    return fileSizeByte, fileLength, alphByteLength, alphCharLength, entropyByte, entropyChar, relativeEntropy, minSize, uniqueWordsRatio
 
 def calcEntropy(file) -> float:
 

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1790018036.59291 "gabarit_tp1.tex" "gabarit_tp1.pdf" "gabarit_tp1" 1790018037.44748 0
-  "../resultats/q1_metriques.csv" 1790018029.75234 445 468f7fca81cd634fe827c64acb66b8c6 ""
+["pdflatex"] 1790618086.21686 "gabarit_tp1.tex" "gabarit_tp1.pdf" "gabarit_tp1" 1790618087.01995 0
+  "../Resultats/q1_metriques.csv" 1790612357.17131 512 7e3beee3c1c10e9b4e026727505d8bf3 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/newtx/ntx-ec-tlf-pc.enc" 1698694482 3136 bbe665bd0bb471a2da1e8fd326cff9fa ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/newtx/ntx-ec-tlf.enc" 1698694482 2914 fdbc4a54b9bc76f4551b5303f2737d33 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -152,10 +152,10 @@
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774209607 3636776 dc5fa9b6b1453b9d196cd42edf876004 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
   "figure_performances.pdf" 1788305672 37874 26ee58f03a044b8df6a2c4792213323f ""
-  "gabarit_tp1.aux" 1790018037.34977 3093 d47d50c16a4dba95e4116f01b95fd067 "pdflatex"
-  "gabarit_tp1.out" 1790018037.35088 1741 72b01b1bd553625a3a5d01d6b1ae4430 "pdflatex"
-  "gabarit_tp1.tex" 1790018036.48195 9239 cc6cffe4b552a60bbf9389d13e888d4a ""
-  "gabarit_tp1.toc" 1790018037.35114 765 bd15620080ee992b82011b8bbb988768 "pdflatex"
+  "gabarit_tp1.aux" 1790618086.92695 3171 dfd292526b3427d3b9d08aed65e6f3b9 "pdflatex"
+  "gabarit_tp1.out" 1790618086.92785 1941 f3c1622def6ddcd1a9ea7113dfea5066 "pdflatex"
+  "gabarit_tp1.tex" 1790618086.13059 18916 626d76b0708dc376a797d5e3bae8bc13 ""
+  "gabarit_tp1.toc" 1790618086.92807 804 cde23ca848d10399a1be3b1c6a1d91a6 "pdflatex"
   "logo_polytechnique.png" 1788305613 6622 25a95a939a6e1f894083066e550a2f91 ""
   (generated)
   "gabarit_tp1.aux"

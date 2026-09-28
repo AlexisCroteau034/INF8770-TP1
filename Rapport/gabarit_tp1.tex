@@ -115,21 +115,41 @@ Cette section présente l'objectif du travail pratique et le contexte des travau
 
 \textit{Rappel : Ce gabarit est limité à un maximum strict de 10 pages, annexes comprises. Veillez à rester synthétique, rigoureux et précis dans vos explications.}
 
+Ce travail a pour objectif l'expérimentation avec les méthodes de compression sans perte vues en classe, dans le but d'en obtenir une compréhension plus pratique. 
+
 % ==============================================================================
 % 2. RÉPONSES AUX QUESTIONS
 % ==============================================================================
 \section{Réponses aux Questions}
 \label{sec:reponses}
-Cette section regroupe l'ensemble des réponses aux questions de l'énoncé du TP. Veillez à structurer vos réponses de manière claire, concise et étayée par des résultats d'ingénierie.
 
 % ------------------------------------------------------------------------------
-\subsection{Question 1 : [Titre de la Question 1]}
+\subsection{Question 1 : Métriques d'analyse et choix des textes}
 \label{subsec:q1}
-Présentez ici votre analyse technique relative à la première question de l'énoncé. Décrivez la méthodologie employée, les observations préliminaires et vos formulations théoriques.
 
+Les textes choisis sont le texte littéraire en français, les données structurées météo et le code source en Python.
 
+\subsubsection*{Présentation des métriques}
 
-Le Tableau~\ref{tab:exemple_tableau} illustre le format attendu pour la présentation de vos mesures quantitatives. Veillez à toujours indiquer les unités de mesure pour chaque colonne.
+Les différentes métriques présentées dans le Tableau~\ref{tab:analyse_q1} permettront une analyse plus exhaustive de chaque fichier, en exposant certaines valeurs clés utiles.
+Dans un premier temps, le tableau présente la taille du fichier en octets, ainsi que le nombre de caractères qu'il contient.
+Puisque très souvent, un caractère est codé par un seul octet, ces deux valeurs devraient s'approximer.
+Ensuite, le tableau expose la taille de l'alphabet, soit la longueur de la liste de tous les symboles différents que contient le fichier, encore une fois exprimée en octets, et en nombre de symboles.
+Ces deux valeurs seront à nouveau à peu près équivalentes, pour la même raison exprimée plus tôt.
+
+La métrique suivante présente l'entropie, soit le nombre minimal de bits nécessaires, en moyenne, pour exprimer un symbole du fichier à l'étude, en employant une méthode traitant chaque symbole individuellement.
+Elle est calculée en prenant en compte la probabilité d'occurrence de chaque symbole dans le texte, et est un indicateur de l'équilibre d'apparition entre ceux-ci.
+Un fichier présentant une forte entropie aura donc une occurrence assez équivalente d'apparition de chacun des symboles de son alphabet, alors qu'un fichier plus déséquilibré aura une entropie plus faible.
+Cette valeur minimale ne borne par contre que les modèles d'ordre 0, tel le modèle de Huffman, et un code qui prend en compte les séquences de symboles pourrait la surpasser.
+Le ratio entropie sur entropie maximale représente simplement l'économie que génère un modèle d'ordre 0 optimal par rapport à un fichier encodé sans compression.
+Découlant directement de l'entropie, la taille théorique minimale multiplie cette valeur de bits par la taille du fichier, nous proposant le meilleur scénario de taille que pourrait produire une compression avec un modèle traitant les symboles individuellement.
+
+Finalement, le ratio de mots uniques découle d'une manipulation un peu plus complexe, et est un indicateur approximatif de la performance attendue d'un algorithme exploitant les séquences.
+Cette valeur implique d'abord la séparation du fichier en mots, soit des séries de caractères séparées par des délimiteurs. 
+Dans le but de produire un résultat optimal tout en gardant une règle uniforme pour les trois fichiers, le choix des caractères a été réalisé suite à une analyse des fichiers et de leurs structures répétitives. 
+% Les caractères espace, saut de ligne (\verb|\n|), point-virgule (\texttt{;}), virgule (\texttt{,}), point (\texttt{.}) et apostrophe (\texttt{'}) ont été retenus comme bornes, et le détail de ces choix sera présenté dans les analyses des caractéristiques spécifiques de chaque texte. 
+Le ratio de mots uniques nous indique ainsi la propension de répétition des mêmes mots dans le texte.
+Un ratio élevé suppose un texte composé de peu de répétitions, alors qu'un ratio faible signifie qu'un petit nombre de mots différents se répèteront souvent.
 
 \begin{table}[htbp]
     \centering
@@ -139,15 +159,85 @@ Le Tableau~\ref{tab:exemple_tableau} illustre le format attendu pour la présent
         tabular=lccc,
         table head=\toprule \textbf{Métrique} & \textbf{Littéraire (fr)} & \textbf{Structuré (CSV)} & \textbf{Code (Python)} \\\midrule,
         table foot=\bottomrule
-    ]{../resultats/q1_metriques.csv}{}{%
+    ]{../Resultats/q1_metriques.csv}{}{%
         \csvcoli & \csvcolii & \csvcoliii & \csvcoliv
     }
 \end{table}
 
+\subsubsection*{Analyse du texte littéraire en Français.}
+
+Dabord, le texte littéraire en français présente une métrique se distinguant, soit la différence assez marquée entre la taille du fichier et en octets et en nombre de caractères.
+Celle-ci s'explique par la méthode d'encodage UTF-8, qui emploie deux octets pour exprimer les caractères accentués: un premier symbole est universel à tous les caractères accentués, alors que le second distingue parmi ceux-ci.
+Ainsi, la différence nous indique que ce texte sera composée d'une quantité importante de caractères accentués. 
+
+De par sa nature littéraire, le fichier sera certainement composé de certains symboles se répétant très souvent, par exemple l'espace.
+L'entropie relative d'environ 74\% renforce cette intuition de relatif déséquilibre dans la répartition des caractères, ce qui favorisera l'encodage Huffman.
+Dans un autre ordre d'idée, le texte littéraire est le plus diversifié des trois en termes de séquences répétitives, présentant un ratio de 53\% de mots uniques.
+Ainsi, un algorithme basé sur les structures répétitives pourrait générer un résultat peu satisfaisant.
+
+\subsubsection*{Analyse des données structurées météo}
+
+D'autre part, les données structurées météo présentent une entropie relative élevée. 
+Cette métriques nous indique que ce texte n'est probablement pas très adapté à un encodage par Huffman.
+En effet, la répartition assez régulière de caractères diversifiés ne permettra pas d'exploiter l'avantage principal de Huffman, soit l'encodage de caractères fréquents avec très peu de bits. 
+
+De plus, on constate que ce texte présente une très importantes répétition des mêmes structures, indiquée par le ratio de mots uniques très faible.
+Il est donc un candidat idéal pour une méthode d'encodage considérant les séquences répétitives, qui produira un résultat nettement plus satisfaisant que Huffman.
+
+\subsubsection*{Analyse du code source en Python}
+
+Finalement, le code source en Python relève l'entropie relative la plus faible, nous indiquant un fort déséquilibre de répartition entre les différents symboles de son alphabet.
+Ceci est attendu, puisqu'un fichier de code est composé de caractères à forte répartition de par leur emploi dans le contexte, par exemple les parenthèses, espaces de l'indentation ou autre marqueurs de structure.
+Ainsi, on pourra s'attendre à un résultat satisfaisant par l'algorithme de Huffman, qui saura exploiter ce déséquilibre.
+
+Par contre avec un ratio de mots uniques relativement faible, il est probable qu'un algorithme employant une méthode prenant en compte les structures répétitives sera également efficace.
+Les langages de code sont composés de mots qui se répètent souvent, et qui pourront être encodés plus efficacement s'ils sont considérés dans leur ensemble.
+
+En bref, l'encodage de Huffman génère une économie d'espace importante dans le cas de textes présentant une entropie relative faible. 
+En effet, il exploite ainsi le déséquilibre de répartition en encodant les caractères fréquents avec peu de bits.
+Par contre, un texte composé d'une répétition fréquente de quelques chaînes de caractère bénéficiera plutôt d'un algorithme sachant exploiter cette forme particulière.
+
 % ------------------------------------------------------------------------------
-\subsection{Question 2 : [Titre de la Question 2]}
+
+\subsection{Question 2 : Choix de la méthode, argumentation et attentes}
 \label{subsec:q2}
-Développez ici votre démarche de résolution, l'exploration des différentes approches possibles et la justification argumentée du choix de votre solution technique.
+
+L'analyse des trois fichiers à l'étude nous indique un fait clair: la redondance s'y trouve plutôt dans les séquences que dans les symboles.
+En effet, bien que le ratio de mots uniques varie grandement, il n'excède pas environ 53\%, indiquant que près d'un mot sur deux est répété.
+Puisque le modèle de Huffman ne considère pas ces répétitions dans son application, il faut explorer d'autres méthodes qui sauront produire un résultat plus satisfaisant.
+La méthode choisie doit être sans perte et s'appliquer aux trois types de fichiers tel que spécifié en énoncé.
+Elle doit aussi bien entendu exploiter les séquences, et rester raisonnable à implémenter.
+
+\subsubsection*{Exploration des méthodes vues en classe}
+
+Parmi les méthodes vues en classe qui s'appliquent aux documents textuels, on compte l'encodage arithmétique.
+Celui-ci est encore un modèle d'ordre 0, et n'élimine que les arrondis de Huffman à des bits entiers. Son gain serait donc marginal. 
+
+Le codage prédictif ou de Golomb-Rice est plutôt conçu pour des signaux numériques où les valeurs voisines sont corrélées, et peu pour du texte.
+En effet, la valeur numérique d'un octet de texte n'a pas de lien avec celle de son voisin, et encoder un lien entre elles serait peu pertinent.
+
+Parmi les méthodes plus prometteuses, on compte l'encodage par paires (BPE).
+Cet algorithme prend bien en compte les séquences répétées, en remplaçant itérativement les paires fréquentes par un octet libre.
+Puisque les alphabets à l'étude ne comptent qu'entre 55 et 68 caractères parmi les 256 valeurs possibles, il resterait amplement de valeurs libres que cet algorithme pourrait exploiter.
+Par contre, l'encodage par paires nécessite un dictionnaire imposant, qu'il faut encoder à même l'en-tête du fichier.
+Il devient donc pertinent dans le cas de fichiers de grande taille et peu pour des fichiers plus réduits comme ceux étudiés ici.
+
+L'encodage LZ77 est également un candidat à évaluer. 
+Son utilisation d'une fenêtre glissante capturerait bien les répétitions de séquences dans le fichier CSV ou de code.
+Par contre, l'emploi de triplets a un coût fixe de bits, même si la correspondance est très courte ou absente.
+De plus, il est assez complexe à implémenter, pour un avantage assez incertain sur les fichiers à l'étude, surtout le fichier littéraire composé de moins de répétitions.
+
+\subsubsection*{Choix de la méthode et argumentation}
+
+La méthode retenue pour l'analyse des fichiers dans le cadre de ce travail pratique est l'encodage LZW.
+Cet algorithme conserve l'avantage des méthodes par dictionnaire, puisqu'il exploite bien les séquences.
+Il n'émet qu'un seul code par séquence, mais surtout, son dictionnaire n'est pas transmis en en-tête du fichier.
+Ainsi, il ne présente pas ce coût fixe imposé par d'autres méthodes et non négligeable sur de petits fichiers, puisque son dictionnaire peut être reconstruit directement par l'algorithme de décodage.
+
+On peut donc s'attendre à une économie substantielle d'espace dans le cas du fichier CSV, dont l'entropie relative est très haute, pénalisant Huffman, et le ratio de mots uniques très bas, favorisant LZW.
+Le fichier Python risque de générer une économie plus modeste, mais tout de même conséquente étant donné la répétition de séquences qu'on y retrouve.
+Moins définitif, le fichier littéraire présente moins de structures répétées, ainsi le gain d'espace pourrait être plus réduit.
+Par contre, le codage LZW y propose toujours l'avantage de ne pas avoir à stocker un dictionnaire en en-tête, contrairement à Huffman.
 
 % ------------------------------------------------------------------------------
 \subsection{Question 3 : [Titre de la Question 3]}
