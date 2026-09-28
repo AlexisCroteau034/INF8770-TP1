@@ -257,8 +257,9 @@ Pour comparer les performances des algorithmes, nous comparons simplement la tai
 \subsection{Question 4 : Analyse des résultats}
 \label{subsec:q4}
 
-Le Tableau~\ref{tab:analyse_q1} et la figure 2 de cette section sont issus de métriques générées lors de l'implémentation des méthodes choisies appliquées aux fichiers à l'étude. 
+Le Tableau\ref{tab:resultats_q4} et la Figure~\ref{fig:resultats_q4} de cette section sont issus de métriques générées lors de l'implémentation des méthodes choisies appliquées aux fichiers à l'étude. 
 Ceux-ci confirment l'atteinte des objectifs: l'encodage par LZW a produit un meilleur taux de compression que Huffman sur les trois fichiers.
+Le débit de chacun des fichiers passe sous la borne de l'entropie, ce qui est impossible pour un encodage évaluant chaque symbole individuellement.
 De plus, la validité des algorithmes est également vérifiée, puisque les trois fichiers ont pu être encodés, puis décodés sans génération d'erreurs dans leur contenu.
 
 \begin{table}[htbp]
@@ -285,34 +286,48 @@ De plus, la validité des algorithmes est également vérifiée, puisque les tro
     \label{fig:resultats_q4}
 \end{figure}
 
-À l'implémentation de l'algorithme d'Huffman, on constate que les résultats attendus indiqués par la borne d'entropie sont presque atteints dans les trois cas.
-La différence mineure est entre autre expliquée par la taille de l'entête, qui s'ajoute à la taille des données encodées.
+À l'implémentation de l'algorithme de Huffman, on constate que les résultats attendus indiqués par la borne d'entropie sont presque atteints dans les trois cas.
+La différence mineure est entre autres expliquée par la taille de l'en-tête, qui s'ajoute à la taille des données encodées.
 Tel que mentionné, l'effet est moindre sur les fichiers de plus grande taille, comme le CSV, et plus remarquable sur les deux autres plus petits fichiers.
 
 \subsubsection*{Conclusions par fichier}
 
-Les résultats obtenus concernant le fichier structuré de données météo confirme l'hypothèse: il présente le plus important gain entre les méthodes.
-L'encodage LZW a en effet généré un fichier 53\% plus petit que l'encodage Huffman, et présente le plus petit débit de bits par octets de tous les fichiers. 
+Les résultats obtenus concernant le fichier structuré de données météo confirment l'hypothèse: il présente le plus important gain entre les méthodes.
+L'encodage LZW a en effet généré un fichier 53\% plus petit que l'encodage Huffman, et présente le plus petit débit de bits par octet de tous les fichiers. 
 Ceci démontre qu'un fichier composé d'une importante répétition de séquences est bien avantagé par l'encodage LZW.
 De plus, on valide ainsi le calcul de la métrique de taux de mots unique et le choix des symboles bornants.
 
 Suivant le fichier CSV, l'encodage LZW du fichier Python propose également une économie importante face à Huffman de près de 24\%, confirmant l'hypothèse.
-Le gain lié au séquences est réel: le fichier Huffman ferait environ 2111 octets sans son entête, contre 1764 pour LZW.
+Le gain lié aux séquences est réel: le fichier Huffman ferait environ 2111 octets sans son en-tête, contre 1764 pour LZW.
 
 Finalement tel qu'anticipé, le fichier littéraire présente l'économie la plus faible, de seulement 7\% entre les méthodes. 
 Cette économie peut presque entièrement s'expliquer par le dictionnaire qui n'a pas à être transmis dans le cas de LZW.
+Ainsi, si l'en-tête du fichier Huffman était calculé de manière plus compacte, l'écart deviendrait quasi nul.
 L'algorithme n'a donc pas su exploiter les séquences, trop peu nombreuses dans ce fichier pour offrir un réel gain.
 
-\subsubsection*{Conclusions par fichier}
+\subsubsection*{Conclusions globales et autres facteurs à considérer}
 
+L'analyse exploratoire proposait le choix d'une méthode de compression en anticipant son impact à partir de métriques pertinentes.
+Les résultats obtenus permettent certainement d'affirmer que la méthode LZW était un choix adéquat, offrant un gain par rapport à Huffman dans les trois cas. 
 
+Par contre, malgré le gain d'espace qu'offre LZW, d'autres métriques retenues lors de la comparaison invitent à la prudence, tel le temps d'exécution.
+En effet, LZW a pris environ deux fois plus de temps que Huffman pour s'exécuter.
+Ceci est certainement dû à l'écriture du dictionnaire, qui est nettement plus complexe que celle de Huffman, et la recherche dans celui-ci alors qu'il grossit à chaque octet.
+Dans le cadre de cette expérimentation, l'impact d'un temps d'exécution plus important est négligeable, mais une mise à l'échelle du processus effectué pourrait avoir d'autres résultats.
+En effet, un temps d'exécution plus élevé impose certainement plus de ressources de calculs.
+Le choix réel d'une méthode à retenir dépendra donc à la fois des ressources mémoire disponibles, mais aussi des ressources de calcul.
 
 % ==============================================================================
 % 3. CONCLUSION
 % ==============================================================================
 \section{Conclusion}
 \label{sec:conclusion}
-Résumez ici les principaux constats de votre travail pratique, la conformité de vos résultats face aux objectifs initiaux et les recommandations d'ingénierie qui en découlent.
+
+Pour conclure, les résultats anticipés dans le cadre de l'analyse exploratoire se sont avérés lors de l'expérimentation: le fichier CSV a produit le résultat le plus satisfaisant, suivi du code puis du fichier littéraire.
+Il est donc possible d'affirmer que, dans le contexte des trois fichiers à l'étude, un encodage LZW produit un meilleur taux de compression lorsque le texte présente une fréquence importante de séquences répétées.
+
+Par contre, la portée de ces résultats ne concerne qu'un nombre limité de tentatives, et il faudrait certainement répéter cette expérimentation sur un échantillon plus important pour confirmer la tendance.
+Aussi, avant d'affirmer que LZW pourrait remplacer Huffman dans de nombreux cas pour de meilleurs résultats, il faut prendre en compte l'ensemble des impacts que pourrait avoir ce changement, notamment les coûts en ressources de l'encodage et du décodage.
 
 % ==============================================================================
 % RÉFÉRENCES
